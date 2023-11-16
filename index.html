@@ -15,7 +15,7 @@
     </div>
     <script>
         // create and style buttons
-        let nrOfButtons = 121
+        let nrOfButtons = 400
         let lenAndWidth = Math.sqrt(nrOfButtons)
         for (let i = 0; i < nrOfButtons; i++) {
             let button = document.createElement('button')
@@ -259,13 +259,22 @@
         // helper functions
         // generate rand num
         function randomNumber() {
-            return Math.random() > 0.5
+            return Math.random() > 0.8
 
         }
 
         let startRendering = setInterval(() => {
             checkStates()
             updateGrid()
+            let AllBlack = true 
+            for (let i = 0; i < nrOfButtons; i++) {
+                if (cellStatuses[`#button-number-${i}`] == 'alive') {
+                    AllBlack = false
+                }
+            }
+            if (AllBlack == true) {
+                clearInterval(startRendering)
+            }
         }, 500)
 
         let stopButton = document.createElement('button')
