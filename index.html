@@ -15,11 +15,11 @@
     </div>
     <script>
         // create and style buttons
-        let nrOfButtons = 64
+        let nrOfButtons = 121
         let lenAndWidth = Math.sqrt(nrOfButtons)
         for (let i = 0; i < nrOfButtons; i++) {
             let button = document.createElement('button')
-            button.innerText = `${i + 1}`
+            button.innerText = `${i}`
             button.id = `button-number-${i}`
             console.log(button)
             button.style.width = "40px"
@@ -38,13 +38,16 @@
         // set initial state
         let cellStatuses = {}
         for (let i = 0; i < nrOfButtons; i++) {
+            let retrievedButton = document.querySelector(`#button-number-${i}`)
+
             if (randomNumber()) {
-                let retrievedButton = document.querySelector(`#button-number-${i}`)
-                retrievedButton.style.color = 'green'
+                retrievedButton.style.background = 'green'
                 cellStatuses[`#button-number-${i}`] = "alive"
             }
             else {
                 cellStatuses[`#button-number-${i}`] = "dead"
+                retrievedButton.style.background = 'black'
+
             }
         }
         console.log(cellStatuses)
@@ -55,37 +58,175 @@
         function checkStates() {
             for (let i = 0; i < nrOfButtons; i++) {
                 let aliveNeighborsCount = 0
-                if (cellStatuses[`#button-number-${i - 1 - lenAndWidth}`] == "alive") {
-                    aliveNeighborsCount += 1
-                }
-                if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
-                    aliveNeighborsCount += 1
+                // if upper left corner
+                if (i === 0) {
+                    if (cellStatuses[`#button-number-${i + 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1 + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
 
                 }
-                if (cellStatuses[`#button-number-${i + 1 - lenAndWidth}`] == "alive") {
-                    aliveNeighborsCount += 1
+                // if upper right corner
+                else if (i == lenAndWidth - 1) {
+                    if (cellStatuses[`#button-number-${i - 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                }
+                // if lower left corner
+                else if (i == (nrOfButtons - lenAndWidth)) {
+                    if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1 - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
 
                 }
-                if (cellStatuses[`#button-number-${i - 1}`] == "alive") {
-                    aliveNeighborsCount += 1
+                // if lower right corner
+                else if (i == (nrOfButtons - 1)) {
+                    if (cellStatuses[`#button-number-${i - 1 - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+                    }
+                    if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
 
                 }
-                if (cellStatuses[`#button-number-${i + 1}`] == "alive") {
-                    aliveNeighborsCount += 1
+                // if top row
+                else if (i < 7) {
+                    if (cellStatuses[`#button-number-${i - 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1 + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
 
                 }
-                if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
-                    aliveNeighborsCount += 1
+                // if left column
+                else if (i % lenAndWidth == 0) {
+                    if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1 - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1 + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
 
                 }
-                if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
-                    aliveNeighborsCount += 1
+                // if bottom row
+                else if (i > 55) {
+                    if (cellStatuses[`#button-number-${i - 1 - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+                    }
+                    if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+                    }
+                    if (cellStatuses[`#button-number-${i - 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
 
                 }
-                if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
-                    aliveNeighborsCount += 1
+                // if right column
+                else if ((i + 1) % lenAndWidth == 0) {
+                    if (cellStatuses[`#button-number-${i - 1 - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+                    }
+                    if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+                    }
+                    if (cellStatuses[`#button-number-${i - 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
 
                 }
+                // if not an edge cell
+                else {
+                    if (cellStatuses[`#button-number-${i - 1 - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+                    }
+                    if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1 - lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i - 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                    if (cellStatuses[`#button-number-${i + 1 + lenAndWidth}`] == "alive") {
+                        aliveNeighborsCount += 1
+
+                    }
+                }
+
                 stateChecker[`#button-number-${i}`] = aliveNeighborsCount
 
             }
@@ -97,21 +238,22 @@
         // set state after deaths and resurrections
         function updateGrid() {
             for (let i = 0; i < nrOfButtons; i++) {
-            if (cellStatuses[`#button-number-${i}`] == "alive" && (stateChecker[`#button-number-${i}`] < 2 ||
-                stateChecker[`#button-number-${i}`] > 3)) {
-                cellStatuses[`#button-number-${i}`] = "dead"
-                document.querySelector(`#button-number-${i}`).style.color = 'black'
-            }
-            if (cellStatuses[`#button-number-${i}`] == "dead" && stateChecker[`#button-number-${i}`] == 3) {
+                if (cellStatuses[`#button-number-${i}`] == "alive" && (stateChecker[`#button-number-${i}`] < 2 ||
+                    stateChecker[`#button-number-${i}`] > 3)) {
+                    cellStatuses[`#button-number-${i}`] = "dead"
+                    document.querySelector(`#button-number-${i}`).style.background = 'black'
 
-                cellStatuses[`#button-number-${i}`] = "alive"
-                document.querySelector(`#button-number-${i}`).style.color = 'green'
+                }
+                if (cellStatuses[`#button-number-${i}`] == "dead" && stateChecker[`#button-number-${i}`] == 3) {
 
+                    cellStatuses[`#button-number-${i}`] = "alive"
+                    document.querySelector(`#button-number-${i}`).style.background = 'green'
+
+                }
             }
+            console.log(cellStatuses)
         }
-        console.log(cellStatuses)
-        }
-        
+
 
 
         // helper functions
@@ -124,16 +266,16 @@
         let startRendering = setInterval(() => {
             checkStates()
             updateGrid()
-        }, 2000)
+        }, 500)
 
         let stopButton = document.createElement('button')
-        
+
         div.append(stopButton)
         stopButton.innerHTML = 'STOP Game of Life'
         stopButton.addEventListener('click', () => {
             clearInterval(startRendering)
         })
-        
+
 
 
     </script>
