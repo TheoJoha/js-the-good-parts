@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Testing</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-    </head>
-    <body>
-        <ul>
 
-        </ul>
-        <script>
-            
+<head>
+    <meta charset="utf-8">
+    <title>Testing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <ul>
+
+    </ul>
+    <script>
+        for (let i = 0; i < 64; i++) {
             let button = document.createElement('button')
+            button.innerText = `${i+1}`
             let ul = document.querySelector('ul')
             ul.append(button)
-        </script>
-    </body>
+        }
+
+        
+
+    </script>
+</body>
+
 </html>
