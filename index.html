@@ -16,6 +16,7 @@
     <script>
         // create and style buttons
         let nrOfButtons = 64
+        let lenAndWidth = Math.sqrt(nrOfButtons)
         for (let i = 0; i < nrOfButtons; i++) {
             let button = document.createElement('button')
             button.innerText = `${i + 1}`
@@ -27,7 +28,6 @@
             ul.append(button)
             let retrievedButton = document.querySelector(`#button-number-${i}`)
             console.log(button, retrievedButton)
-
         }
 
         // set size of div containing buttons
@@ -36,22 +36,82 @@
         div.style.height = `${Math.sqrt(nrOfButtons) * 40 + 40}px`
 
         // set initial state
+        let cellStatuses = {}
         for (let i = 0; i < nrOfButtons; i++) {
             if (randomNumber()) {
                 let retrievedButton = document.querySelector(`#button-number-${i}`)
                 retrievedButton.style.color = 'green'
+                cellStatuses[`#button-number-${i}`] = "alive"
+            }
+            else {
+                cellStatuses[`#button-number-${i}`] = "dead"
             }
         }
+        console.log(cellStatuses)
 
         // set intermediate state, i.e. check which states cells should have in next rendering
         let stateChecker = {}
-        for (let i = 0; i < nrOfButtons; i++) {
-            stateChecker
+
+        function checkStates() {
+            for (let i = 0; i < nrOfButtons; i++) {
+                let aliveNeighborsCount = 0
+                if (cellStatuses[`#button-number-${i - 1 - lenAndWidth}`] == "alive") {
+                    aliveNeighborsCount += 1
+                }
+                if (cellStatuses[`#button-number-${i - lenAndWidth}`] == "alive") {
+                    aliveNeighborsCount += 1
+
+                }
+                if (cellStatuses[`#button-number-${i + 1 - lenAndWidth}`] == "alive") {
+                    aliveNeighborsCount += 1
+
+                }
+                if (cellStatuses[`#button-number-${i - 1}`] == "alive") {
+                    aliveNeighborsCount += 1
+
+                }
+                if (cellStatuses[`#button-number-${i + 1}`] == "alive") {
+                    aliveNeighborsCount += 1
+
+                }
+                if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
+                    aliveNeighborsCount += 1
+
+                }
+                if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
+                    aliveNeighborsCount += 1
+
+                }
+                if (cellStatuses[`#button-number-${i - 1 + lenAndWidth}`] == "alive") {
+                    aliveNeighborsCount += 1
+
+                }
+                stateChecker[`#button-number-${i}`] = aliveNeighborsCount
+
+            }
+            console.log(Object.entries(stateChecker))
         }
 
 
-        // set state after deaths and resurrections
 
+        // set state after deaths and resurrections
+        function updateGrid() {
+            for (let i = 0; i < nrOfButtons; i++) {
+            if (cellStatuses[`#button-number-${i}`] == "alive" && (stateChecker[`#button-number-${i}`] < 2 ||
+                stateChecker[`#button-number-${i}`] > 3)) {
+                cellStatuses[`#button-number-${i}`] = "dead"
+                document.querySelector(`#button-number-${i}`).style.color = 'black'
+            }
+            if (cellStatuses[`#button-number-${i}`] == "dead" && stateChecker[`#button-number-${i}`] == 3) {
+
+                cellStatuses[`#button-number-${i}`] = "alive"
+                document.querySelector(`#button-number-${i}`).style.color = 'green'
+
+            }
+        }
+        console.log(cellStatuses)
+        }
+        
 
 
         // helper functions
@@ -61,7 +121,19 @@
 
         }
 
+        let startRendering = setInterval(() => {
+            checkStates()
+            updateGrid()
+        }, 2000)
 
+        let stopButton = document.createElement('button')
+        
+        div.append(stopButton)
+        stopButton.innerHTML = 'STOP Game of Life'
+        stopButton.addEventListener('click', () => {
+            clearInterval(startRendering)
+        })
+        
 
 
     </script>
