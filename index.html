@@ -8,18 +8,61 @@
 </head>
 
 <body>
-    <ul>
+    <div>
+        <ul>
 
-    </ul>
+        </ul>
+    </div>
     <script>
-        for (let i = 0; i < 64; i++) {
+        // create and style buttons
+        let nrOfButtons = 64
+        for (let i = 0; i < nrOfButtons; i++) {
             let button = document.createElement('button')
-            button.innerText = `${i+1}`
+            button.innerText = `${i + 1}`
+            button.id = `button-number-${i}`
+            console.log(button)
+            button.style.width = "40px"
+            button.style.height = "40px"
             let ul = document.querySelector('ul')
             ul.append(button)
+            let retrievedButton = document.querySelector(`#button-number-${i}`)
+            console.log(button, retrievedButton)
+
         }
 
-        
+        // set size of div containing buttons
+        let div = document.querySelector('div')
+        div.style.width = `${Math.sqrt(nrOfButtons) * 40 + 40}px`
+        div.style.height = `${Math.sqrt(nrOfButtons) * 40 + 40}px`
+
+        // set initial state
+        for (let i = 0; i < nrOfButtons; i++) {
+            if (randomNumber()) {
+                let retrievedButton = document.querySelector(`#button-number-${i}`)
+                retrievedButton.style.color = 'green'
+            }
+        }
+
+        // set intermediate state, i.e. check which states cells should have in next rendering
+        let stateChecker = {}
+        for (let i = 0; i < nrOfButtons; i++) {
+            stateChecker
+        }
+
+
+        // set state after deaths and resurrections
+
+
+
+        // helper functions
+        // generate rand num
+        function randomNumber() {
+            return Math.random() > 0.5
+
+        }
+
+
+
 
     </script>
 </body>
